@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Basic Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    input, select, button {
+      margin: 10px;
+      padding: 10px;
+      font-size: 16px;
+    }
+    #result {
+      font-weight: bold;
+      font-size: 20px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Basic Calculator</h1>
+
+  <input type="number" id="num1" placeholder="First Number">
+  
+  <select id="operator">
+    <option value="+">+</option>
+    <option value="-">−</option>
+    <option value="*">×</option>
+    <option value="/">÷</option>
+  </select>
+
+  <input type="number" id="num2" placeholder="Second Number">
+  
+  <button onclick="calculate()">Calculate</button>
+
+  <div id="result"></div>
+
+  <script>
+    function calculate() {
+      const num1 = parseFloat(document.getElementById('num1').value);
+      const num2 = parseFloat(document.getElementById('num2').value);
+      const operator = document.getElementById('operator').value;
+      let result;
+
+      if (isNaN(num1) || isNaN(num2)) {
+        result = "Please enter valid numbers.";
+      } else {
+        switch (operator) {
+          case '+':
+            result = num1 + num2;
+            break;
+          case '-':
+            result = num1 - num2;
+            break;
+          case '*':
+            result = num1 * num2;
+            break;
+          case '/':
+            if (num2 === 0) {
+              result = "Cannot divide by zero.";
+            } else {
+              result = num1 / num2;
+            }
+            break;
+          default:
+            result = "Invalid operator.";
+        }
+      }
+
+      document.getElementById('result').textContent = "Result: " + result;
+    }
+  </script>
+
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Angle Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 40px;
+    }
+    input, select, button {
+      margin: 10px;
+      padding: 10px;
+      font-size: 16px;
+    }
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Basic Angle Calculator</h1>
+
+  <select id="calcType" onchange="showFields()">
+    <option value="degToRad">Degrees to Radians</option>
+    <option value="radToDeg">Radians to Degrees</option>
+    <option value="sumAngles">Sum of Two Angles</option>
+    <option value="angleBetweenSlopes">Angle Between Two Slopes</option>
+  </select>
+
+  <div id="inputFields"></div>
+
+  <button onclick="calculate()">Calculate</button>
+
+  <div id="result"></div>
+
+  <script>
+    function showFields() {
+      const type = document.getElementById('calcType').value;
+      const container = document.getElementById('inputFields');
+      container.innerHTML = '';
+
+      if (type === 'degToRad') {
+        container.innerHTML = '<input type="number" id="degrees" placeholder="Degrees">';
+      } else if (type === 'radToDeg') {
+        container.innerHTML = '<input type="number" id="radians" placeholder="Radians">';
+      } else if (type === 'sumAngles') {
+        container.innerHTML = `
+          <input type="number" id="angle1" placeholder="Angle 1 (degrees)">
+          <input type="number" id="angle2" placeholder="Angle 2 (degrees)">
+        `;
+      } else if (type === 'angleBetweenSlopes') {
+        container.innerHTML = `
+          <input type="number" id="slope1" placeholder="Slope of Line 1 (m1)">
+          <input type="number" id="slope2" placeholder="Slope of Line 2 (m2)">
+        `;
+      }
+    }
+
+    function calculate() {
+      const type = document.getElementById('calcType').value;
+      let result;
+
+      if (type === 'degToRad') {
+        const degrees = parseFloat(document.getElementById('degrees').value);
+        result = (degrees * Math.PI / 180).toFixed(4) + ' radians';
+
+      } else if (type === 'radToDeg') {
+        const radians = parseFloat(document.getElementById('radians').value);
+        result = (radians * 180 / Math.PI).toFixed(2) + ' degrees';
+
+      } else if (type === 'sumAngles') {
+        const a1 = parseFloat(document.getElementById('angle1').value);
+        const a2 = parseFloat(document.getElementById('angle2').value);
+        result = (a1 + a2).toFixed(2) + ' degrees';
+
+      } else if (type === 'angleBetweenSlopes') {
+        const m1 = parseFloat(document.getElementById('slope1').value);
+        const m2 = parseFloat(document.getElementById('slope2').value);
+        const angleRad = Math.atan(Math.abs((m2 - m1) / (1 + m1 * m2)));
+        const angleDeg = angleRad * 180 / Math.PI;
+        result = angleDeg.toFixed(2) + ' degrees between lines';
+      }
+
+      document.getElementById('result').textContent = "Result: " + result;
+    }
+
+    // Show initial fields
+    showFields();
+  </script>
+
+</body>
+</html>
